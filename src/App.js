@@ -1,25 +1,19 @@
-import logo from './logo.svg';
+import React from "react"
 import './App.css';
+import "antd/dist/antd.css"
+import Filter from "./components/Filter";
+import TableContainer from "./components/TableContainer";
+import ContextProvider from "./context/ContextProvider";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <ContextProvider>
+                <Filter/>
+                <TableContainer/>
+            </ContextProvider>
+        </div>
+    );
 }
 
 export default App;
