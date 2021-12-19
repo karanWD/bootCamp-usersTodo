@@ -5,16 +5,13 @@ import useAxios from "../hooks/useAxios";
 export const Context = createContext()
 
 const ContextProvider = ({children}) => {
-
+    const [users,setUsers]=useState([])
     const [userId, setUserId] = useState()
-    console.log("aaa")
+    const [tasks,setTasks] = useState([])
 
-    const {data, loading, error} = useAxios(`todos${userId ? `?userId=${userId}` : ``}`, userId)
-
-    console.log("bbbb",loading)
-
+    console.log(tasks)
     return (
-        <Context.Provider value={{userId, setUserId, data, loading}}>
+        <Context.Provider value={{userId, setUserId,users,setUsers,tasks,setTasks}}>
             {children}
         </Context.Provider>
     )

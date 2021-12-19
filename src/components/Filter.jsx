@@ -1,4 +1,4 @@
-import React,{useContext} from "react"
+import React,{useContext,useEffect} from "react"
 import {Select} from 'antd';
 import useAxios from "../hooks/useAxios";
 import {Context} from "../context/ContextProvider";
@@ -6,8 +6,16 @@ import {Context} from "../context/ContextProvider";
 const {Option} = Select;
 
 const Filter = () => {
+    console.log("filter")
+    const {setUserId,setUsers,users} = useContext(Context)
     const {data,loading,error} = useAxios("users")
-    const {setUserId} = useContext(Context)
+
+
+    useEffect(()=>{
+        setUsers(data)
+    },[data])
+
+
     const changeHandler = (value)=>{
         setUserId(value)
     }
@@ -31,10 +39,10 @@ const Filter = () => {
         >
             {
                 loading  ?
-                    <h1>Loading</h1>
+                    <Option>Loading</Option>
                     :
-                    data.map((user) =>
-                        <Option value={user.id}>{user.name}</Option>
+                    users.map((user,i) =>
+                        <Option key={i} value={user.id}>{user.name}</Option>
                     )
             }
 

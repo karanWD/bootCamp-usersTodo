@@ -3,12 +3,12 @@ import axios from "axios";
 
 
 const useAxios = (endpoint,dependency) => {
-    console.log(endpoint,dependency)
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     useEffect(() => {
+
         const fetch = async () => {
             try {
                 setLoading(true)

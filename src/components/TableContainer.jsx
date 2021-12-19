@@ -1,4 +1,4 @@
-import React,{useContext} from "react"
+import React,{useContext,useEffect} from "react"
 import useAxios from "../hooks/useAxios";
 import {Table,Tag} from "antd";
 import {
@@ -11,8 +11,14 @@ const { Column } = Table;
 
 
 const TableContainer = () => {
-    const {data,loading} = useContext(Context)
+    console.log("table")
 
+    const {userId,setTasks,tasks} = useContext(Context)
+    const {data, loading, error} = useAxios(`todos${userId ? `?userId=${userId}` : ``}`, userId)
+
+    useEffect(()=>{
+        setTasks(data)
+    },[data])
 
     return (
         <div style={{width:"100%"}}>
@@ -20,7 +26,7 @@ const TableContainer = () => {
                loading && !data ?
                    <h1>Loading</h1>
                    :
-                   <Table dataSource={data} >
+                   <Table dataSource={tasks} >
                        <Column title="UserId" dataIndex="userId" key="userId" />
                        <Column title="tasks" dataIndex="title" key="title" />
                        <Column
