@@ -21,19 +21,19 @@ const AddBtn = () => {
     };
     const handleOk = () => {
         console.log(userId,task)
-        axios.post(`https://jsonplaceholder.typicode.com/todos`,{
+        axios.post(`http://localhost:4000/todos`,{
             userId,
             title:task,
             completed:false
         })
-            .then(res => setTasks(prev => [...prev,res.data]))
+            .then(res =>console.log(res))
             .catch(e=>console.log(e))
             .finally(()=>setVisible(false))
     };
 
     return (
         <>
-            <Button type="primary" onClick={showModal}>
+            <Button size={`large`} type="primary" style={{width:"30%"}} onClick={showModal}>
                Add New +
             </Button>
             <Modal

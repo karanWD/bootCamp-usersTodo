@@ -6,14 +6,9 @@ import {Context} from "../context/ContextProvider";
 const {Option} = Select;
 
 const Filter = () => {
-    console.log("filter")
+console.log("filter")
     const {setUserId,setUsers,users} = useContext(Context)
-    const {data,loading,error} = useAxios("users")
-
-
-    useEffect(()=>{
-        setUsers(data)
-    },[data])
+    useAxios("users",'',null,setUsers)
 
 
     const changeHandler = (value)=>{
@@ -38,7 +33,7 @@ const Filter = () => {
             allowClear
         >
             {
-                loading  ?
+                !users  ?
                     <Option>Loading</Option>
                     :
                     users.map((user,i) =>

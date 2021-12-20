@@ -2,35 +2,16 @@ import React, {useState, useEffect} from "react"
 import axios from "axios";
 
 
-const useAxios = (endpoint,dependency) => {
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
-
+const useAxios = (endpoint,option, dependency,setData) => {
     useEffect(() => {
-
-        const fetch = async () => {
-            try {
-                setLoading(true)
-                await axios.get(`https://jsonplaceholder.typicode.com/${endpoint}`)
-                    .then(
-                        (res) => {
-                            setData(res.data)
-                        }
-                    )
-            } catch (e) {
-                await setError(e)
-            } finally {
-                await setLoading(false)
-            }
-        }
-
-        fetch()
-
+        axios.get(`http://localhost:4000/${endpoint}${option}`)
+            .then(
+                (res) => {
+                    setData(res.data)
+                }
+            ).catch(e => console.log(e))
     }, [dependency])
 
-
-    return {data, error, loading}
 }
 
 export default useAxios
