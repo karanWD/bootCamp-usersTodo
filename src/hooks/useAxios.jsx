@@ -10,7 +10,7 @@ const useAxios = (endpoint,option, dependency,setData) => {
                     setData(res.data)
                 }
             ).catch(e => console.log(e))
-    }, [dependency])
+    }, dependency)
 
 }
 

@@ -8,7 +8,7 @@ const {Option} = Select;
 const Filter = () => {
 console.log("filter")
     const {setUserId,setUsers,users} = useContext(Context)
-    useAxios("users",'',null,setUsers)
+    useAxios("users",'',[],setUsers)
 
 
     const changeHandler = (value)=>{

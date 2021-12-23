@@ -1,41 +1,55 @@
-import React,{useContext,useEffect} from "react"
+import React, {useContext, useEffect,useState} from "react"
 import useAxios from "../hooks/useAxios";
-import {Table,Tag} from "antd";
+import {Table, Tag, Button} from "antd";
 import {
     CheckCircleOutlined,
     SyncOutlined,
 } from '@ant-design/icons';
 import {Context} from "../context/ContextProvider";
+import axios from "axios";
 
-const { Column } = Table;
+const {Column} = Table;
 
 
 const TableContainer = () => {
-    console.log("table")
-    const {userId,setTasks,tasks} = useContext(Context)
-
+    const {userId, setTasks, tasks} = useContext(Context)
+    const [deletedId, setDeletedId] = useState()
+    
     const option = userId ? `?userId=${userId}` : ``
-    useAxios(`todos`, option, userId,setTasks)
+
+    useAxios(`todos`, option, [userId,deletedId], setTasks)
+
+    const deleteHandler = (id) => {
+        console.log(id)
+        axios.delete(`http://localhost:4000/todos/${id}`).then(
+            res => setDeletedId(id)
+        )
+    }
 
     return (
-        <div style={{width:"100%"}}>
-           {
+        <div style={{width: "100%"}}>
+            {
                 !tasks ?
-                   <h1>Loading</h1>
-                   :
-                   <Table dataSource={tasks} >
-                       <Column title="UserId" dataIndex="userId" key="userId" />
-                       <Column title="tasks" dataIndex="title" key="title" />
-                       <Column
-                           title="status"
-                           dataIndex="completed"
-                           key="completed"
-                           render={
-                                   completed => completed ? <Tag  icon={<CheckCircleOutlined />} color="#87d068">Completed</Tag> : <Tag icon={<SyncOutlined/>} color="warning">In Progress</Tag>
-                           }
-                       />
-                   </Table>
-           }
+                    <h1>Loading</h1>
+                    :
+                    <Table dataSource={tasks}>
+                        <Column title="UserId" dataIndex="userId" key="userId"/>
+                        <Column title="tasks" dataIndex="title" key="title"/>
+                        <Column
+                            title="status"
+                            dataIndex="completed"
+                            key="completed"
+                            render={
+                                completed => completed ?
+                                    <Tag icon={<CheckCircleOutlined/>} color="#87d068">Completed</Tag> :
+                                    <Tag icon={<SyncOutlined/>} color="warning">In Progress</Tag>
+                            }
+                        />
+                        <Column title={"process"} dataIndex={"id"} key={"process"}
+                                render={id => <Button type={"primary"} danger
+                                                      onClick={() => deleteHandler(id)}>Delete</Button>}/>
+                    </Table>
+            }
         </div>
     )
 }
