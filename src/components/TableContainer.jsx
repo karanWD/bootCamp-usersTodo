@@ -12,17 +12,17 @@ const {Column} = Table;
 
 
 const TableContainer = () => {
-    const {userId, setTasks, tasks} = useContext(Context)
+    const {userId, setTasks, tasks,renderReason,setRenderReason} = useContext(Context)
     const [deletedId, setDeletedId] = useState()
     
     const option = userId ? `?userId=${userId}` : ``
 
-    useAxios(`todos`, option, [userId,deletedId], setTasks)
+    useAxios(`todos`, option, [userId,renderReason], setTasks)
 
     const deleteHandler = (id) => {
         console.log(id)
         axios.delete(`http://localhost:4000/todos/${id}`).then(
-            res => setDeletedId(id)
+            res => setRenderReason(`delete ${id}`)
         )
     }
 

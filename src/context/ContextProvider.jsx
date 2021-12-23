@@ -9,12 +9,13 @@ const ContextProvider = ({children}) => {
     const [users, setUsers] = useState([])
     const [userId, setUserId] = useState()
     const [tasks, setTasks] = useState([])
+    const [renderReason,setRenderReason] = useState()
     console.log("context afterState")
 
     console.log(tasks)
 
     return (
-        <Context.Provider value={{userId, setUserId, users, setUsers, tasks, setTasks}}>
+        <Context.Provider value={{userId, setUserId, users, setUsers, tasks, setTasks,renderReason,setRenderReason}}>
             {children}
         </Context.Provider>
     )

@@ -6,12 +6,15 @@ const {Option} = Select;
 const { TextArea } = Input;
 
 const AddBtn = () => {
+    //AntD States
     const [visible, setVisible] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [modalText, setModalText] = useState('Content of the modal');
+    //Local State
     const [userId,setUserId]=useState()
     const[task,setTask]=useState()
-    const {users,setTasks} = useContext(Context)
+    //Context States
+    const {users,setRenderReason} = useContext(Context)
 
     const showModal = () => {
         setVisible(true);
@@ -26,7 +29,7 @@ const AddBtn = () => {
             title:task,
             completed:false
         })
-            .then(res =>console.log(res))
+            .then(res =>setRenderReason(`create ${res.data.id}`))
             .catch(e=>console.log(e))
             .finally(()=>setVisible(false))
     };
